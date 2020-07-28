@@ -9,9 +9,6 @@
   "files": [
     "src"
   ],
-  "publishConfig": {
-    "access": "restricted"
-  },
   "scripts": {
     "test": "npm run eslint && npm run test:mocha",
     "test:types": "tsc --build tsconfig-build.json",
