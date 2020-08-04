@@ -1,10 +1,10 @@
 {
   "name": "ecosystem-interop-loader",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "src/ecosystem-interop-loader.mjs",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=13.0.0"
   },
   "files": [
     "src"
@@ -12,14 +12,15 @@
   "scripts": {
     "test": "npm run eslint && npm run test:mocha",
     "test:types": "tsc --build tsconfig-build.json",
-    "test:mocha": "mocha --experimental-loader=./src/ecosystem-interop-loader.mjs --no-timeouts --exit 'test/unit/*.test.mjs' 'test/it/*.test.mjs'",
+    "test:mocha": "mocha --experimental-loader=./src/ecosystem-interop-loader.mjs --no-timeouts --exit 'test/it/*.test.mjs'",
     "eslint": "eslint '**/*.js'"
   },
   "keywords": [
     "nodejs",
     "esm",
     "loader",
-    "npm"
+    "npm",
+    "cjs"
   ],
   "author": "Gil Tayar <gil@tayar.org>",
   "license": "Unlicense",
@@ -31,11 +32,11 @@
   "devDependencies": {
     "@types/node": "^14.0.27",
     "chai": "^4.2.0",
-    "eslint": "^7.5.0",
+    "eslint": "^7.6.0",
     "eslint-plugin-mocha-no-only": "^1.1.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "mocha": "^8.1.0",
+    "mocha": "^8.1.1",
     "prettier": "^2.0.5",
     "typescript": "^3.9.7"
   }
