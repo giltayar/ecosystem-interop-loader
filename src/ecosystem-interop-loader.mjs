@@ -53,13 +53,18 @@ export default m;
 
   const thisModule = require(fileURLToPath(url))
 
-  if (thisModule == null || typeof thisModule !== 'object') {
+  if (thisModule == null || (typeof thisModule !== 'object' && typeof thisModule !== 'function')) {
     return {source: commonSource}
   } else {
     const exportNames = Object.keys(thisModule)
 
     const source = `${commonSource}${exportNames
-      .map((exportName) => `export const ${exportName} = m['${exportName}'];`)
+      .map(
+        (exportName) =>
+          // this weird export is because "exportName" may be a reserved word (e.g. "static"),
+          // and this is the only way to export it
+          `const __${exportName} = m['${exportName}']; export {__${exportName} as ${exportName}}`,
+      )
       .join('\n')}`
 
     return {source}

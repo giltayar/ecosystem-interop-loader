@@ -44,8 +44,7 @@ describe('cjs named exports', function () {
         path.join(__dirname, './cjs-modules-for-testing/no-exports.js'),
         path.join(nodeModulesDir, 'no-exports'),
       )
-      // eslint-disable-next-line node/no-extraneous-import
-      // eslint-disable-next-line node/no-missing-import
+      // eslint-disable-next-line
       const result = await import('no-exports')
 
       expect({...result}).to.eql({default: undefined})
@@ -56,8 +55,7 @@ describe('cjs named exports', function () {
         path.join(__dirname, './cjs-modules-for-testing/export-number-4.js'),
         path.join(nodeModulesDir, 'export-number-4'),
       )
-      // eslint-disable-next-line node/no-extraneous-import
-      // eslint-disable-next-line node/no-missing-import
+      // eslint-disable-next-line
       const result = await import('export-number-4')
 
       expect({...result}).to.eql({default: 4})
@@ -68,11 +66,25 @@ describe('cjs named exports', function () {
         path.join(__dirname, './cjs-modules-for-testing/export-object-a-4-b-5.js'),
         path.join(nodeModulesDir, 'export-object-a-4-b-5'),
       )
-      // eslint-disable-next-line node/no-extraneous-import
-      // eslint-disable-next-line node/no-missing-import
+      // eslint-disable-next-line
       const result = await import('export-object-a-4-b-5')
 
       expect({...result}).to.eql({default: {a: 4, b: 5}, a: 4, b: 5})
+    })
+  })
+
+  describe('edge cases', () => {
+    it('should import CJS where default is a function and named exports are props of that function', async () => {
+      const result = await import('./cjs-modules-for-testing/export-function-and-objs.js')
+
+      expect({...result}).to.containSubset({anotherNumber: 7, yetAnotherNumber: 17})
+      expect(result.default()).to.equal(42)
+    })
+
+    it('should allow importing a reserved keyword', async () => {
+      const result = await import('./cjs-modules-for-testing/export-reserved-keyword.js')
+
+      expect(result.static).to.equal('static is a reserved keyword')
     })
   })
 })
