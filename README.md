@@ -28,7 +28,7 @@ console.log(a, b)
 
 ...then you will get an error, saying that you cannot import by name from CommonJS modules.
 
-Wh this restriction of using named exports when importing CommonJS? This is
+Why this restriction of using named exports when importing CommonJS? This is
 an unfortunate side-effect of the fact that the ESM specification does not allow executing a module
 before binding the import variables, but the only way to determine what named imports the module
 has is via execution. So during the binding phase of the import variables, Node.js
