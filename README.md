@@ -13,7 +13,7 @@ module.exports = {a: 4, b: 5}
 You can import it using `import` from the ESM `esm.mjs`:
 
 ```js
-import cjs from './cjs.js`
+import cjs from './cjs.js'
 
 console.log(cjs) // {a: 4, b: 5}
 ```
@@ -21,7 +21,7 @@ console.log(cjs) // {a: 4, b: 5}
 But you can only use default exports. If you try to use named exports, thus...
 
 ```js
-import {a, b} from './cjs.js`
+import {a, b} from './cjs.js'
 
 console.log(a, b)
 ```
@@ -81,8 +81,8 @@ Using this loader will guarantee that the CJS modules will be executed out of or
 if you have an ESM file `x.mjs`:
 
 ```js
-import somethingElse from `./mjs.js`
-import something from './cjs.js`
+import somethingElse from './mjs.js'
+import something from './cjs.js'
 ```
 
 Then when executing `x.mjs` without a loader, first `mjs.js` will be executed, and then `cjs.js`
