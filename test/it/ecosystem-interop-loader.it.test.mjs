@@ -86,6 +86,12 @@ describe('cjs named exports', function () {
 
       expect(result.static).to.equal('static is a reserved keyword')
     })
+
+    it(`should support babel/ts-transpiled modules who's "default" export is explicit`, async () => {
+      const result = await import('./cjs-modules-for-testing/export-like-babel.js')
+
+      expect({...result}).to.eql({default: 42, a: 4, b: 5})
+    })
   })
 })
 

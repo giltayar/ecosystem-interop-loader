@@ -48,22 +48,28 @@ export function getSource(url, context, defaultGetSource) {
 import module from 'module';
 const require = module.createRequire(import.meta.url);
 const m = require(${JSON.stringify(new URL(url).pathname)});
-export default m;
 `
 
   const thisModule = require(fileURLToPath(url))
 
   if (thisModule == null || (typeof thisModule !== 'object' && typeof thisModule !== 'function')) {
-    return {source: commonSource}
+    return {source: commonSource + 'export default m;'}
   } else {
+    const isBabelTranspiled = !!thisModule.__esModule
     const exportNames = Object.keys(thisModule)
 
-    const source = `${commonSource}${exportNames
-      .map(
-        (exportName) =>
-          // this weird export is because "exportName" may be a reserved word (e.g. "static"),
-          // and this is the only way to export it
-          `const __${exportName} = m['${exportName}']; export {__${exportName} as ${exportName}}`,
+    const source = `
+    ${commonSource}${isBabelTranspiled ? 'export default m.default' : 'export default m'}
+    ${exportNames
+      .map((exportName) =>
+        // remove an export if it's named "default" because that creates a syntax error
+        // in ESM.
+        exportName === 'default'
+          ? ''
+          : // this weird way to export is
+            // because "exportName" may be a reserved word (e.g. "static"),
+            // and this is the only way to export it
+            `const __${exportName} = m['${exportName}']; export {__${exportName} as ${exportName}}`,
       )
       .join('\n')}`
 
